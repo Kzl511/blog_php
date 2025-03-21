@@ -25,7 +25,7 @@ if (empty($_SESSION['user_id']) && empty($_SESSION['logged_in'])) {
                   $pageno = 1;
                 }
 
-                $numOfRecs = 1;
+                $numOfRecs = 5;
                 $offset = ($pageno - 1) * $numOfRecs;
 
                 if (empty($_POST['search'])) {
@@ -73,7 +73,7 @@ if (empty($_SESSION['user_id']) && empty($_SESSION['logged_in'])) {
                     <tr>
                       <td><?php echo $i ?></td>
                       <td><?php echo $value['title'] ?></td>
-                      <td><?php echo $value['content'] ?></td>
+                      <td><?php echo substr($value['content'], 0, 50) ?></td>
                       <td>
                         <div class="btn-group">
                           <div class="edit-container">
