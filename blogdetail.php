@@ -16,10 +16,16 @@ $stmtcmt = $pdo->prepare("SELECT * FROM comments WHERE post_id = $blogId");
 $stmtcmt->execute();
 $cmResult = $stmtcmt->fetchAll();
 
-$authorId = $cmResult[0]['author_id'];
-$stmtau = $pdo->prepare("SELECT * FROM users where id=$authorId");
-$stmtau->execute();
-$auResult = $stmtau->fetchAll();
+$auResult = [];
+
+if ($cmResult) {
+  foreach ($cmResult as $key => $value) {
+    $authorId = $cmResult[$key]['author_id'];
+    $stmtau = $pdo->prepare("SELECT * FROM users where id=$authorId");
+    $stmtau->execute();
+    $auResult[] = $stmtau->fetchAll();
+  }
+}
 
 if ($_POST) {
   $comment = $_POST['comment'];
@@ -44,7 +50,7 @@ if ($_POST) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Widgets</title>
+  <title>Blog Detail</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -84,15 +90,25 @@ if ($_POST) {
                 <h3>Comments</h3>
                 <hr>
                 <div class="card-comment">
+                  <?php 
+                    if ($cmResult) {
+                  ?>
                   <div class="comment-text" style="margin-left: 0px !important;">
-                    <span class="username">
-                      Maria Gonzales
-                      <span class="text-muted float-right">8:03 PM Today</span>
-                    </span><!-- /.username -->
-                    It is a long established fact that a reader will e distracted
-                    by the readable content of a page when looking at its layout.
+                      <?php 
+                        foreach ($cmResult as $key => $value) {
+                      ?>
+                      <span class="username"><?php echo $auResult[$key][0]['name']; ?>
+                        <span class="text-muted float-right"><?php echo $value['created_at'] ?></span>
+                      </span><!-- /.username -->
+                    <?php echo $value['content']; ?><br>
+                      <?php
+                        }
+                      ?>
                   </div>
                   <!-- /.comment-text -->
+                   <?php 
+                    }
+                   ?>
                 </div>
               </div>
               <!-- /.card-footer -->
