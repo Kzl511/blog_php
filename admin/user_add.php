@@ -28,7 +28,7 @@ if ($_POST) {
             );
 
             if ($result) {
-                echo "<script>alert('New Admin Account Created Successfully!');  window.location.href='index.php';</script>";
+                echo "<script>alert('New Admin Account Created Successfully!');  window.location.href='user_list.php';</script>";
             }
         } 
     } else {
@@ -50,7 +50,7 @@ if ($_POST) {
             );
 
             if ($result) {
-                echo "<script>alert('New User Account Created Successfully!');  window.location.href='index.php';</script>";
+                echo "<script>alert('New User Account Created Successfully!');  window.location.href='user_list.php';</script>";
             }
         }
     }
@@ -84,7 +84,7 @@ if ($_POST) {
     <div class="card-body login-card-body">
       <p class="login-box-msg">Register New Account</p>
 
-      <form action="register.php " method="post">
+      <form action="" method="post">
       <div class="input-group mb-3">
           <input type="text" name="name" class="form-control" placeholder="Name">
           <div class="input-group-append">
